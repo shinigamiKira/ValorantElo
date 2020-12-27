@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html class="jett-bg">
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8WZGNCME04"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-8WZGNCME04');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VALORANTELO - Error</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename = 'css/circle-progress.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+    rel="stylesheet">
+  <script src="https://kit.fontawesome.com/15d6e01caf.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <div class="container px-8 mx-auto text-center w-full h-full">
+    <div class="flex flex-col items-center justify-center w-full h-full">
+      <div class="p-12 w-full lg:w-1/2 mx-auto bg-white">
+        <h1 class="text-3xl md:text-6xl valorant" style="color: #fa4454">SORRY, AN ERROR HAS OCCURRED.</h1>
+        <div class="text-left text-base md:text-2xl my-4">
+          <p>{{ error }}</p>
+        </div>
+        <a class="login-btn px-4 py-2 text-xl font-bold" href="{{ url_for('home') }}">
+          GO BACK
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

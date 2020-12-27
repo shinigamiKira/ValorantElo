@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="match-bg">
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8WZGNCME04"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-8WZGNCME04');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title }}</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename = 'css/circle-progress.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/15d6e01caf.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+  <div class="container mx-auto px-4 text-center">
+    <div class="font-bold my-8">
+      <h1 class="valorant text-4xl">Match History</h1>
+      <h1 class="my-2 text-2xl">{{name}}</h1>
+    </div>
+    <div class="flex flex-col">
+      <table class="hidden md:table w-full font-bold" style="text-align: center; vertical-align: middle; table-layout: auto;">
+        <col style="width:16%" span="6" />
+        <tr>
+          <td title="Your current ranked tier after the match.">Current Rank Tier</td>
+          <td title="Your current ranked ELO after the match. Reaching 100 points will promote you to the next tier.">Current Rank ELO</td>
+          <td title="How much your ELO changed from the match.">ELO Change</td>
+          <td title="The match outcome.">Game Outcome</td>
+          <td title="The status of your movement within the tier.">Competitive Movement</td>
+          <td title="The game map and date.">Game Data</td>
+        </tr>
+      </table>
+      {% for match in posts %}
+      <div class="flex flex-col md:flex-row bg-{{ match.main_color }}-400 items-center text-l md:text-2xl">
+          <table class="w-full" style="text-align: center; vertical-align: middle; table-layout: auto;">
+            <col style="width:16%" span="6" />
+            <tr>
+              <td title="Your current ranked tier after the match.">
+                <div class="w-1/3 md:w-1/2 h-auto px-2 my-4 mx-auto block">
+                  <img class="w-full h-auto" src="{{ url_for('static', filename=match.tier) }}" />
+                </div>
+              </td>
+              <td title="Your current ranked ELO after the match. Reaching 100 points will promote you to the next tier.">
+                <div class="flex flex-row justify-center">
+                  <div class="mx-auto progress{{ loop.index }}"></div>
+                </div>                
+              </td>
+              <td title="How much your ELO changed from the match.">{{match.lp_change}}</td>
+              <td title="The match outcome.">{{match.game_outcome}}</td>
+              <td title="The status of your movement within the tier.">{{match.movement}}</td>
+              <!-- <td>{{match.date}}</td> -->
+              <!-- <td class="maps-bg" style="background-image: url({{ url_for('static', filename=match.game_map )}}); background-position: center center; background-size: auto;">
+              </td> -->
+              <td title="The game map and date." class="maps-bg text-white" style="background: linear-gradient(to left, rgba(255,255,255,0) 80%,
+              {{ match.gradient_color }}), url({{ url_for('static', filename=match.game_map )}});">
+              {{match.date}}
+            </td>
+            </tr>
+          </table>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="h-4"></div>
+    <footer class="text-center pt-8 text-xl container mx-auto">
+      <p>Dylan Theriot © 2020</p>
+      <div class="social-icons">
+        <a title="GitHub" target="_blank" href="https://github.com/dylantheriot/valorant-match-history">
+          <i class="fab fa-github"></i>
+        </a>
+        <a title="LinkedIn" target="_blank" href="https://www.linkedin.com/in/dylan-theriot/">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a title="Personal Website" target="_blank" href="http://dylantheriot.com/">
+          <i class="fas fa-link"></i>
+        </a>
+        <a title="Email" target="_blank" href="mailto:dylantheriot@tamu.edu">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+      <p class="text-base my-4">VALORANT ELO TRACKER isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.</p>
+      <div class="h-4"></div>
+    </footer>
+    <div class="h-8"></div>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/circle-progress.js') }}"></script>
+
+    <script>
+      {% for match in posts %}
+      new CircleProgress('.progress{{ loop.index }}', {
+        max: 100,
+        value: {{ match.current_lp }},
+        textFormat: 'vertical'
+    });
+      {% endfor %}
+
+    </script>
+
+</body>
+
+</html>
